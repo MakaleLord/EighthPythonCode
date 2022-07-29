@@ -37,20 +37,43 @@ pre{
 }
 </style>
 
-<div>
-You choose Rock &#128142;
-Computer choose Rock &#128142;
-It's a draw
-You choose Paper &#128220;
-Computer choose Rock &#128142;
-You won
-You choose Scissors &#9986;
-Computer choose Scissors &#9986;
-It's a draw
+#!/usr/bin/python3
+print("Content-type: text/html \n")
 
+import magicwand
 
-Match Summary
-Total Matches:  3
-You won:  1
-You lost:  0
-You won the whole thing
+from rps import choices, random_choice, check, getSymbol
+
+win = 0
+lose = 0
+player_choices = ("Rock", "Paper", "Scissors")
+
+for player in player_choices:
+    print("You choose", player, getSymbol(player))
+
+    if player not in choices:
+        print("Wrong choice")
+    else:
+        computer = random_choice()
+        print("Computer choose", computer, getSymbol(computer))
+        if player == computer:
+            print("It's a draw")
+        elif check(player, computer):
+            win = win + 1
+            print("You won")
+        else:
+            lose = lose + 1
+            print("You lose")
+            
+print()
+print()
+print("Match Summary")
+print("Total Matches: ", len(player_choices))
+print("You won: ", win)
+print("You lost: ", lose)
+if win > lose:
+    print("You won the whole thing")
+elif lose == win:
+    print("Nobody won")
+else:
+    print("You lost")
